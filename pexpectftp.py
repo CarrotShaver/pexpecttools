@@ -7,7 +7,6 @@
 
 import argparse
 import pexpect
-import sys
 
 def Main():
     parser = argparse.ArgumentParser()
@@ -56,8 +55,6 @@ def Main():
     child.expect("ftp")
     if args.verbose:
         print("Opening interact mode...")
-    sys.stdout.write(child.after)
-    sys.stdout.flush()
     child.interact()
 
     if args.verbose:
