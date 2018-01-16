@@ -3,7 +3,7 @@
 # Program: pexpectftp.py
 # This program will automatically log in to an ftp server and open a terminal to be used
 
-#testing args: -d speedtest.tele2.net/ -u anonymous -v
+#testing args: -d speedtest.tele2.net -u anonymous -v
 
 import argparse
 import pexpect
@@ -33,7 +33,6 @@ def Main():
 
     if args.username == None:
         args.username = "anonymous"
-        args.password = " "
     if args.password == None:
         args.password = " "
 
@@ -44,13 +43,17 @@ def Main():
         print("Successfully spawned ftp child.")
     child.delaybeforesend = .5
 
+    if args.verbose:
+        print("Expecting Name prompt....")
     child.expect("[Nn]ame .*: ")
     if args.verbose:
         print("Received name prompt: inputting username...")
     child.sendline(str(args.username))
     if args.verbose:
-        print("Received password prompt: inputting password...")
+        print("Expecting Password prompt...")
     child.expect("[Pp]assword")
+    if args.verbose:
+        print("Received password prompt: inputting password...")
     child.sendline(str(args.password))
     child.expect("ftp")
     if args.verbose:
